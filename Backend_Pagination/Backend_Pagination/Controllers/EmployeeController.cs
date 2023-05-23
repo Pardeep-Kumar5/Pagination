@@ -22,9 +22,11 @@ namespace Backend_Pagination.Controllers
             _employeeRepository = employeeRepository;
         }
         [HttpGet]
-        public IEnumerable<Employee> GetAllEmployees()
+        public IActionResult GetEmployeesByPage(int pageNumber, int pageSize)
         {
-            return _employeeRepository.GetAllEmployees();
+            List<Employee> employees = _employeeRepository.GetEmployeesByPage(pageNumber, pageSize);
+
+            return Ok(employees);
         }
         [HttpGet("{id}")]
         public IActionResult GetEmployeeById(int id)
@@ -47,6 +49,12 @@ namespace Backend_Pagination.Controllers
         public void UpdateEmployee(Employee employee)
         {
             _employeeRepository.UpdateEmployee(employee);
+        }
+        [HttpGet("FilterData")]
+        public IActionResult GetFilter (string FilterData,string filterBy)
+        {
+            var FilterName = _employeeRepository.GetFilteredData(FilterData, filterBy);
+            return Ok(FilterName);
         }
         [HttpDelete]
         public void DeleteEmployee(int id)

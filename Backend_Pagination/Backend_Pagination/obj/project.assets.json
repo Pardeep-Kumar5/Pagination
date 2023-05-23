@@ -642,11 +642,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Pardeep kumar\\Assignment_TicketBookingSystem\\Backend_Pagination\\Backend_Pagination\\Backend_Pagination.csproj",
+      "projectUniqueName": "D:\\Pardeep kumar\\Pagination_Assginment\\Backend_Pagination\\Backend_Pagination\\Backend_Pagination.csproj",
       "projectName": "Backend_Pagination",
-      "projectPath": "D:\\Pardeep kumar\\Assignment_TicketBookingSystem\\Backend_Pagination\\Backend_Pagination\\Backend_Pagination.csproj",
+      "projectPath": "D:\\Pardeep kumar\\Pagination_Assginment\\Backend_Pagination\\Backend_Pagination\\Backend_Pagination.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "D:\\Pardeep kumar\\Assignment_TicketBookingSystem\\Backend_Pagination\\Backend_Pagination\\obj\\",
+      "outputPath": "D:\\Pardeep kumar\\Pagination_Assginment\\Backend_Pagination\\Backend_Pagination\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

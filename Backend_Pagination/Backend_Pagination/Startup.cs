@@ -34,7 +34,19 @@ namespace Backend_Pagination
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend_Pagination", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "My Police",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -45,7 +57,7 @@ namespace Backend_Pagination
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend_Pagination v1"));
             }
-
+            app.UseCors("My Police");
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -1,0 +1,137 @@
+<br>
+<h2 class="text-primary text-center">This is Employee Page</h2>
+<div class="m-5">
+<button class="btn btn-info p-2 m-2 " data-toggle="modal" data-target="#newmodal"> 
+    <i class="fa fa-plus">
+        New Employee
+    </i>
+</button>
+<div class="col-12">
+<table class="table  table-border table-stripe table-hover table-warning">
+<thead>
+
+  <div>
+    <label>Filter By:</label>
+    <select [(ngModel)]="filterBy">
+      <option value="Name">Name</option>
+      <option value="Address">Address</option>
+      <option value="Salary">Salary</option>
+    </select>
+    <br>
+    <label>Filter Param:</label>
+    <input type="text" [(ngModel)]="filterParam">
+    <br>
+    <button (click)="onFilter()">Filter</button>
+  </div>
+
+  
+</thead>
+<tbody>
+    <tr *ngFor='let employee of EmployeeList'>
+        <td>{{employee.name}}</td>
+        <td>{{employee.address}}</td>
+        <td>{{employee.salary}}</td>
+        <td>
+          <button class="btn btn-info m-1" data-toggle="modal" data-target="#editmodal">
+            <!-- <i class="fa fa-edit"></i> -->
+            Edit
+          </button>
+          <button class="btn btn-danger m-1">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+</tbody>
+</table>
+</div>
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+      <li class="page-item" [class.disabled]="pageNumber === 1">
+      <a class="page-link" (click)="setPage(pageNumber - 1)">Previous</a>
+    </li>
+   
+    <li class="page-item" [class.active]="pageNumber === i" *ngFor="let i of getTotalPages()">
+      <a class="page-link" (click)="setPage(i)">{{ i }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="pageNumber === getTotalPages().slice(-1)[0]">
+      <a class="page-link" (click)="setPage(pageNumber + 1)">Next</a>
+    </li>
+  </ul>
+</nav>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="newmodal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title btn btn-info">
+             Add New Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <div  class="form-group row">
+            <label for="txtname" class="col-sm-4"> Name</label>
+            <div class="col-sm-8">
+                <input id="txtname"type="text" name="Name" [(ngModel)]="NewEmployee.name" placeholder="Enter Name" class="form-control">
+            </div>
+         </div>
+         <div  class="form-group row">
+            <label for="txtaddress" class="col-sm-4"> Address</label>
+            <div class="col-sm-8">
+                <input id="txtaddress" type="text" name="Address"[(ngModel)]="NewEmployee.address" placeholder="Enter Address" class="form-control">
+            </div>
+         </div>
+         <div  class="form-group row">
+            <label for="txtSalary" class="col-sm-4"> Salary</label>
+            <div class="col-sm-8">
+                <input id="txtSalary" type="number" name="Salary" [(ngModel)]="NewEmployee.salary" placeholder="Enter Salary" class="form-control">
+            </div>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" (click)="SaveEmployee()" class="btn btn-primary">Save </button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="editmodal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title btn btn-info">
+             Add New Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <div  class="form-group row">
+            <label for="txtname" class="col-sm-4"> Name</label>
+            <div class="col-sm-8">
+                <input id="txtname"type="text" name="Name" placeholder="Enter Name" class="form-control">
+            </div>
+         </div>
+         <div  class="form-group row">
+            <label for="txtaddress" class="col-sm-4"> Address</label>
+            <div class="col-sm-8">
+                <input id="txtaddress" type="text" name="Address" placeholder="Enter Address" class="form-control">
+            </div>
+         </div>
+         <div  class="form-group row">
+            <label for="txtSalary" class="col-sm-4"> Salary</label>
+            <div class="col-sm-8">
+                <input id="txtSalary" type="number" name="Salary" placeholder="Enter Salary" class="form-control">
+            </div>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-primary">Save </button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
