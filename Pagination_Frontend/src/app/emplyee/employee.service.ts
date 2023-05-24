@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {HttpClient, HttpParams}from'@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams}from'@angular/common/http';
 import { Employee } from '../employee/employee';
 
 @Injectable({
@@ -18,41 +18,26 @@ export class EmployeeService {
 
     return this.httpclient.get<Employee[]>(`${this.apiUrl}/getemployeesbypage`, { params });
   }
-
-  // getFilteredData(filterParam: string, filterBy: string): Observable<Employee[]> {
-  //   debugger
-  //   const url = `${this.baseurl}Employee/filterParam`;
-
-  //   const params = {
-  //     filterParam: filterParam,
-  //     filterBy: filterBy
-  //   };
-
-  //   return this.httpclient.get<Employee[]>(url, { params });
-  // }
-
-  getFilteredData(filterParam: string, filterBy: string): Observable<Employee[]> {
-    debugger;
-    const url = `${this.baseurl}employees/filter`;
-  
-    let params = {};
-  
-    if (filterParam) {
-      params = {
-        filterParam: filterParam,
-        filterBy: filterBy
-      };
-    } else {
-      params = {
-        filterBy: filterBy
-      };
-    }
-  
-    return this.httpclient.get<Employee[]>(url, { params });
-  }
-  
   SaveEmployee(NewEmployee:Employee):Observable<Employee>
   {
     return this.httpclient.post<Employee>("https://localhost:44371/api/Employee",NewEmployee);
+  }
+
+  getFilteredData(filterParam: string, filterBy: string): Observable<Employee[]> {
+    debugger;
+    const url = this.baseurl;
+    let params = new HttpParams();
+  
+    if (filterParam) {
+      params = params.set('filterParam', filterParam);
+    }
+    params = params.set('filterBy', filterBy);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      params: params
+    };
+    return this.httpclient.get<Employee[]>(url, httpOptions);
   }
 }

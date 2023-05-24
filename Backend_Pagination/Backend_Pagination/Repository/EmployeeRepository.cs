@@ -42,7 +42,6 @@ namespace Backend_Pagination.Repository
             using (var connection = new SqlConnection(_connectionstring))
             {
                 connection.Open();
-
                 var command = new SqlCommand("GetFilteredData", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@filterParam", filterParam);
@@ -55,7 +54,7 @@ namespace Backend_Pagination.Repository
                 {
                     var employee = new Employee
                     {
-                        //Id = (int)reader["Id"],
+                        Id = (int)reader["Emp_Id"],
                         Name = (string)reader["Emp_Name"],
                         Address =(string)reader["Emp_Address"],
                         Salary = (int)reader["Emp_Salary"]
@@ -65,7 +64,6 @@ namespace Backend_Pagination.Repository
                 return employees;
             }
         }
-    
     public void DeleteEmployee(int id)
         {
             using (var connection = new SqlConnection(_connectionstring))

@@ -51,9 +51,9 @@ namespace Backend_Pagination.Controllers
             _employeeRepository.UpdateEmployee(employee);
         }
         [HttpGet("FilterData")]
-        public IActionResult GetFilter (string FilterData,string filterBy)
+        public IActionResult GetFilter (string filterParam, string filterBy)
         {
-            var FilterName = _employeeRepository.GetFilteredData(FilterData, filterBy);
+            var FilterName = _employeeRepository.GetFilteredData(filterParam, filterBy);
             return Ok(FilterName);
         }
         [HttpDelete]

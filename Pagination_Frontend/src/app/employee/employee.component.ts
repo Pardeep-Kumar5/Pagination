@@ -9,14 +9,17 @@ import { Subscriber, filter } from 'rxjs';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent {
- 
+  SortedEmployee:Employee[]=[];
 EmployeeList:Employee[]=[];
 pageNumber = 1;
 pageSize = 3;
 totalItems = 0 ;
 filterParam: any;
   filterBy: any;
+  sortColumn: any; 
+  sortDirection: any;
 EditEmployee:Employee=new Employee();
+
 NewEmployee:Employee=new Employee();
 
 constructor(private employeeservice:EmployeeService){}
@@ -33,13 +36,45 @@ GetAll()
         this.EmployeeList = employees;
       });
 }
-onFilter(): void {
+getFilteredData(filterParam: string, filterBy: string): void {
   debugger;
-  this.employeeservice.getFilteredData(this.filterParam, this.filterBy)
-    .subscribe(employees => {
-      this.EmployeeList = employees;
-    });
+  this.employeeservice.getFilteredData(filterParam, filterBy)
+    .subscribe(employees => this.EmployeeList = employees);
 }
+
+sortEmployees(column: string) {
+  if (column === this.sortColumn) {
+    // If the same column is clicked again, toggle the sort direction
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  } else {
+    // If a different column is clicked, set the new column and default sort direction
+    this.sortColumn = column;
+    this.sortDirection = 'asc';
+  }
+
+  // Perform the sorting based on the selected column and direction
+  this.SortedEmployee = this.EmployeeList.slice().sort((a, b) => {
+    const valueA = this.getPropertyValue(a, this.sortColumn);
+    const valueB = this.getPropertyValue(b, this.sortColumn);
+
+    if (valueA < valueB) {
+      return this.sortDirection === 'asc' ? -1 : 1;
+    } else if (valueA > valueB) {
+      return this.sortDirection === 'asc' ? 1 : -1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+getPropertyValue(obj: any, property: string) {
+  // Retrieve the value of the specified property from the object
+  const properties = property.split('.');
+  return properties.reduce((o, prop) => o && o[prop], obj);
+}
+
+
+
 setPage(pageNumber: number) {
   this.pageNumber = pageNumber;
   this.GetAll();

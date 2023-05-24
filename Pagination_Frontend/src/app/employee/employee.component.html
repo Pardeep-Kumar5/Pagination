@@ -6,28 +6,34 @@
         New Employee
     </i>
 </button>
+<button class="btn btn-outline-primary" (click)="sortEmployees('name')">Sort by Name</button>
+<button class="btn btn-primary" (click)="sortEmployees('address')">Sort by Address</button>
+<button class="btn btn-primary" (click)="sortEmployees('salary')">Sort by Salary</button>
 <div class="col-12">
-<table class="table  table-border table-stripe table-hover table-warning">
+<table class="table table-border table-stripe table-hover table-warning">
 <thead>
-
-  <div>
-    <label>Filter By:</label>
+<div class="row">
+  <div class="col-4">
+    <br>
+    <label>Filter:  </label>
     <select [(ngModel)]="filterBy">
       <option value="Name">Name</option>
       <option value="Address">Address</option>
       <option value="Salary">Salary</option>
     </select>
-    <br>
-    <label>Filter Param:</label>
-    <input type="text" [(ngModel)]="filterParam">
-    <br>
-    <button (click)="onFilter()">Filter</button>
   </div>
-
-  
+    <div class="col-4">
+    <label>Select Value</label>
+    <input type="text" [(ngModel)]="filterParam">
+  </div>
+  <div class="col-4">
+    <br>
+    <button (click)="getFilteredData(filterParam,filterBy)" class="btn btn-primary">Filter</button>
+  </div>
+  </div>
 </thead>
 <tbody>
-    <tr *ngFor='let employee of EmployeeList'>
+    <tr *ngFor='let employee of SortedEmployee'>
         <td>{{employee.name}}</td>
         <td>{{employee.address}}</td>
         <td>{{employee.salary}}</td>
