@@ -43,16 +43,13 @@ getFilteredData(filterParam: string, filterBy: string): void {
 }
 
 sortEmployees(column: string) {
+  debugger;
   if (column === this.sortColumn) {
-    // If the same column is clicked again, toggle the sort direction
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   } else {
-    // If a different column is clicked, set the new column and default sort direction
     this.sortColumn = column;
     this.sortDirection = 'asc';
   }
-
-  // Perform the sorting based on the selected column and direction
   this.SortedEmployee = this.EmployeeList.slice().sort((a, b) => {
     const valueA = this.getPropertyValue(a, this.sortColumn);
     const valueB = this.getPropertyValue(b, this.sortColumn);

@@ -37,7 +37,6 @@ namespace Backend_Pagination.Controllers
             {
                 return NotFound();
             }
-
             return Ok(employee);
         }
         [HttpPost]
