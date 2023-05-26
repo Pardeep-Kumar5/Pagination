@@ -8,10 +8,12 @@ namespace Backend_Pagination.Repository.IRepository
 {
    public interface IEmployeeRepository
     {
-        IEnumerable<Employee> GetAllEmployees();
+        IEnumerable<Employee> GetEmployeesByFilter(string nameFilter, string addressFilter, int? salaryFilter);
         List<Employee> GetEmployeesByPage(int pageNumber, int pageSize);
-        Task<Employee> GetEmployeeById(int id);
-        List<Employee> GetFilteredData(string filterParam, string filterBy);
+
+        //Task<Employee> GetEmployeeById(int id);
+        //IEnumerable<Employee> GetAllEmployees();
+        //List<Employee> GetFilteredData(string filterParam, string filterBy);
         void AddEmployee(Employee employee);
         void UpdateEmployee(Employee employee);
         public void DeleteEmployee(int id);

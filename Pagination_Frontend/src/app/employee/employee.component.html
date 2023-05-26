@@ -1,70 +1,47 @@
 <br>
 <h2 class="text-primary text-center">This is Employee Page</h2>
 <div class="m-5">
-<button class="btn btn-info p-2 m-2 " data-toggle="modal" data-target="#newmodal"> 
+<button class="btn btn text-warning p-2 m-2 " data-toggle="modal" data-target="#newmodal"> 
     <i class="fa fa-plus">
         New Employee
     </i>
-</button>
-<button class="btn btn-outline-primary" (click)="sortEmployees('name')">Sort by Name</button>
-<button class="btn btn-primary" (click)="sortEmployees('address')">Sort by Address</button>
-<button class="btn btn-primary" (click)="sortEmployees('salary')">Sort by Salary</button>
+  </button>
 <div class="col-12">
-<table class="table table-border table-stripe table-hover table-warning">
+<table class="table table-border table-stripe table-hover table-stripe table-warning">
 <thead>
-<div class="row">
-  <div class="col-4">
-    <br>
-    <label>Filter:  </label>
-    <select [(ngModel)]="filterBy">
-      <option value="Name">Name</option>
-      <option value="Address">Address</option>
-      <option value="Salary">Salary</option>
-    </select>
-  </div>
-    <div class="col-4">
-    <label>Select Value</label>
-    <input type="text" [(ngModel)]="filterParam">
-  </div>
-  <div class="col-4">
-    <br>
-    <button (click)="getFilteredData(filterParam,filterBy)" class="btn btn-primary">Filter</button>
-  </div>
-  </div>
+
 </thead>
 <tbody>
-    <tr *ngFor='let employee of SortedEmployee'>
+  <tr>
+    <th>Name<input type="text"class="textbox col-10 m-2" placeholder="Name"></th>
+    <th>Address<input type="text" class="textbox col-10 m-2" placeholder="Address"></th>
+    <th>Salary<input type="text" class="textbox col-10 m-2" placeholder="Salary"></th>
+    <th>Actions</th>
+
+    <tr *ngFor='let employee of EmployeeList'>
         <td>{{employee.name}}</td>
         <td>{{employee.address}}</td>
         <td>{{employee.salary}}</td>
-        <td>
-          <button class="btn btn-info m-1" data-toggle="modal" data-target="#editmodal">
-            <!-- <i class="fa fa-edit"></i> -->
-            Edit
-          </button>
-          <button class="btn btn-danger m-1">
-            <i class="fa fa-trash"></i>
-          </button>
-        </td>
       </tr>
 </tbody>
 </table>
 </div>
-<nav aria-label="Page navigation">
-  <ul class="pagination">
-      <li class="page-item" [class.disabled]="pageNumber === 1">
-      <a class="page-link" (click)="setPage(pageNumber - 1)">Previous</a>
-    </li>
-   
-    <li class="page-item" [class.active]="pageNumber === i" *ngFor="let i of getTotalPages()">
-      <a class="page-link" (click)="setPage(i)">{{ i }}</a>
-    </li>
-    <li class="page-item" [class.disabled]="pageNumber === getTotalPages().slice(-1)[0]">
-      <a class="page-link" (click)="setPage(pageNumber + 1)">Next</a>
-    </li>
-  </ul>
-</nav>
 
+<button class="btn btn-link"(click)="onPageChange(pageNumber - 1)" class="text" [disabled]="pageNumber === 1">Previous</button>
+<button class="btn btn-link" (click)="onPageChange(pageNumber + 1)" [disabled]="pageNumber === totalItems">Next</button>
+</div> 
+<div style="text-align: center; background-color: lightblue;">
+<button class="btn btn-link" (click)="onPageChange(1)"  [disabled]="pageNumber === 1">1</button>
+<button class="btn btn-link" (click)="onPageChange(2)" [disabled]="pageNumber === 2">2</button>
+<button class="btn btn-link" (click)="onPageChange(3)" [disabled]="pageNumber === 3">3</button>
+<button class="btn btn-link">
+  <select [(ngModel)]="pageSize">
+    <option  value="4" (click)="onPageSize(4)" [disabled]="pageSize === 4">4</option>
+    <option value="5" (click)="onPageSize(5)" [disabled]
+    ="pageSize === 5">5</option>
+    <option value="7" (click)="onPageSize(7)" [disabled]="pageSize === 7">7</option>
+  </select>
+</button>
 
 <div class="modal" tabindex="-1" role="dialog" id="newmodal">
     <div class="modal-dialog" role="document">

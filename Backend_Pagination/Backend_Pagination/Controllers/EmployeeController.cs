@@ -21,6 +21,13 @@ namespace Backend_Pagination.Controllers
         {
             _employeeRepository = employeeRepository;
         }
+
+        [HttpGet("GetEmployeesithFilter")]
+        public IActionResult GetEmployeesithFilter(string nameFilter, string addressFilter, int? salaryFilter)
+        {
+            var employees = _employeeRepository.GetEmployeesByFilter(nameFilter, addressFilter, salaryFilter);
+            return Ok(employees);
+        }
         [HttpGet]
         public IActionResult GetEmployeesByPage(int pageNumber, int pageSize)
         {
@@ -28,17 +35,17 @@ namespace Backend_Pagination.Controllers
 
             return Ok(employees);
         }
-        [HttpGet("{id}")]
-        public IActionResult GetEmployeeById(int id)
-        {
-            var employee = _employeeRepository.GetEmployeeById(id);
+        //[HttpGet("{id}")]
+        //public IActionResult GetEmployeeById(int id)
+        //{
+        //    var employee = _employeeRepository.GetEmployeeById(id);
 
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            return Ok(employee);
-        }
+        //    if (employee == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(employee);
+        //}
         [HttpPost]
         public void AddEmployee(Employee employee)
         {
@@ -49,12 +56,12 @@ namespace Backend_Pagination.Controllers
         {
             _employeeRepository.UpdateEmployee(employee);
         }
-        [HttpGet("FilterData")]
-        public IActionResult GetFilter (string filterParam, string filterBy)
-        {
-            var FilterName = _employeeRepository.GetFilteredData(filterParam, filterBy);
-            return Ok(FilterName);
-        }
+        //[HttpGet("FilterData")]
+        //public IActionResult GetFilter (string filterParam, string filterBy)
+        //{
+        //    var FilterName = _employeeRepository.GetFilteredData(filterParam, filterBy);
+        //    return Ok(FilterName);
+        //}
         [HttpDelete]
         public void DeleteEmployee(int id)
         {

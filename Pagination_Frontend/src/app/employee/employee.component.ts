@@ -9,41 +9,48 @@ import { Subscriber, filter } from 'rxjs';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent {
-  SortedEmployee:Employee[]=[];
 EmployeeList:Employee[]=[];
+filteredEmployeeList:Employee[]=[];
+EditEmployee=new Employee();
+NewEmployee=new Employee();
 pageNumber = 1;
-pageSize = 3;
-totalItems = 0 ;
-filterParam: any;
-  filterBy: any;
-  sortColumn: any; 
-  sortDirection: any;
-EditEmployee:Employee=new Employee();
-
-NewEmployee:Employee=new Employee();
-
+pageSize: number = 3; 
+totalItems=0;
+searchTerm = '';
+filterValue:any;
+filteredEmployees: any;
+filterParam:any;
+filterBy:any;
+sortColumn: any; 
+sortDirection: any;
+empList:any[]=[];
+SortedEmployee:Employee[]=[];
+value:any;
 constructor(private employeeservice:EmployeeService){}
 
 ngOnInit()
-{
-  this.GetAll();
-
-}
-GetAll()
-{
-  this.employeeservice.getEmployeesByPage(this.pageNumber, this.pageSize)
-      .subscribe(employees => {
-        this.EmployeeList = employees;
+  {
+    this.loadData();
+  }
+  loadData() {
+    this.employeeservice.getEmployeesByPage(this.pageNumber, this.pageSize)
+      .subscribe(Employee => {
+        this.EmployeeList = Employee;
+        this.SortedEmployee=Employee;
       });
-}
-getFilteredData(filterParam: string, filterBy: string): void {
-  debugger;
-  this.employeeservice.getFilteredData(filterParam, filterBy)
-    .subscribe(employees => this.EmployeeList = employees);
-}
-
+  }
+  onPageChange(page: number) {
+    this.pageNumber = page;
+    this.loadData();
+  }
+  onPageSize(page: number) {
+    this.pageSize = page;
+    this.loadData();
+    location.reload();
+  }
+  
 sortEmployees(column: string) {
-  debugger;
+  debugger
   if (column === this.sortColumn) {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   } else {
@@ -63,35 +70,22 @@ sortEmployees(column: string) {
     }
   });
 }
-
 getPropertyValue(obj: any, property: string) {
-  // Retrieve the value of the specified property from the object
   const properties = property.split('.');
   return properties.reduce((o, prop) => o && o[prop], obj);
 }
-
-
-
-setPage(pageNumber: number) {
-  this.pageNumber = pageNumber;
-  this.GetAll();
-}
-previousPage() {
-  if (this.pageNumber > 1) {
-    this.pageNumber--;
-    this.GetAll();
+  getFilteredData(filterParam: any, filterBy: any): void {
+    debugger;
+    this.employeeservice.getEmployeesByPage(filterParam, filterBy)
+      .subscribe(employees => this.EmployeeList = employees);
   }
-}
-nextPage() {
-  const totalPages = this.getTotalPages().length;
-  if (this.pageNumber < totalPages) {
-    this.pageNumber++;
-    this.GetAll();
-  }
-}
-
-getTotalPages(): number[] {
-  return Array(Math.ceil(this.totalItems / this.pageSize)).fill(0).map((x, i) => i + 1);
+  
+Getall()
+{
+  this.employeeservice.getEmployeesByPage(this.pageNumber, this.pageSize)
+      .subscribe(employees => {
+        this.filteredEmployeeList = employees;
+      });
 }
 
 SaveEmployee()
